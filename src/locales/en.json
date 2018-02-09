@@ -1,0 +1,28 @@
+{
+    "home": "Home",
+    "lang": {
+        "es": "Spanish",
+        "en": "English"
+    },
+    "data-table": {
+        "selection": "multiple",
+        "columns": "Columns",
+        "allCols": "All Columns",
+        "rows": "Rows",
+        "selected": {
+            "singular": "item selected.",
+            "plural": "items selected."
+        },
+        "clear": "Clear",
+        "search": "Search",
+        "all": "All"
+    },
+    "nfcText": {
+        "waitingTag": "Scan a tag…",
+        "tagSerial": "Serial number",
+        "notAvailable": "Your mobile is not compatible.",
+        "showSettings": "Enable NFC",
+        "history": "History",
+        "noHistory": "Empty"
+    }
+}
