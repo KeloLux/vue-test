@@ -92,10 +92,17 @@
           document.removeEventListener('resume', this.registerTagEvent, false)
           if (typeof nfc !== 'undefined') {
             // Nfc is available, waiting for scan
-            nfc.addTagDiscoveredListener(
-              this.displayTagId,
-              this.success,
+    
+            nfc.addNdefListener(
+              this.onNdef, () => { this.success(); this.addLog('addNdefListener') },
               this.error
+            )
+
+            nfc.addTagDiscoveredListener(
+              this.displayTagId, this.success, this.error
+            )
+            nfc.addTagDiscoveredListener(
+              'text/pg', this.onNdef, this.error
             )
           }
           else {
@@ -112,13 +119,17 @@
         },
         displayTagId (nfcEvent) {
           // Decode tag data from the plugin
-          this.addLog('displayTagId nfcEvent = ' + nfcEvent)
           const tag = nfcEvent.tag
+          this.addLog('displayTagId tag = ' + JSON.stringify(nfcEvent.tag))
           const tagId = nfc.bytesToHexString(tag.id)
           // Push the new tag to the saved list
           this.items.push(tagId)
           // Show the tag Id to the user
           nativeAlert(`${this.$t('nfcText.tagSerial')} : ${tagId}`)
+        },
+        onNdef: function (nfcEvent) {
+          this.addLog('onNdef tag = ' + JSON.stringify(nfcEvent.tag))
+          navigator.notification.vibrate(100)
         },
         error (e) {
           // Manage the state
