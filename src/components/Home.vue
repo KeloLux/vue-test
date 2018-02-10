@@ -1,17 +1,15 @@
 <template>
-    <!-- Replace following <div> with <router-view /> component if using subRoutes -->
-    <div class="layout-padding logo-container non-selectable no-pointer-events">
-        <div class="logo" :style="position">
-            <img src="~assets/images/logo.png">
-        </div>
+  <!-- Replace following <div> with <router-view /> component if using subRoutes -->
+  <div class="justify-center layout-padding logo-container non-selectable no-pointer-events">
+    <div class="on-right" :style="position">
+      <img src="~assets/images/logo.png">
     </div>
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
-import {
-  dom,
-  event
+import {  dom,  event
 } from "quasar";
 
 const { viewport } = dom,
@@ -149,21 +147,21 @@ export default {
 @import '~quasar-framework/dist/core.variables.styl';
 
 .bg-h-green .q-item:hover {
-    background-color: $link-color !important;
+  background-color: $link-color !important;
 }
 
 .logo-container {
-    width: 255px;
-    height: 242px;
-    perspective: 800px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+  width: 255px;
+  height: 242px;
+  perspective: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .logo {
-    position: absolute;
-    transform-style: preserve-3d;
+  position: absolute;
+  transform-style: preserve-3d;
 }
 </style>

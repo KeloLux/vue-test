@@ -6,7 +6,7 @@
           <q-icon name="menu" />
         </q-btn>
         <q-toolbar-title>
-          Quasar App
+          Test Quasar App
         </q-toolbar-title>
         <q-btn color="link-color">
           <q-item>

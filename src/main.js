@@ -35,6 +35,7 @@ if (process.env.NODE_ENV === 'development') {
     Vue.config.silent = true
 }
 
+
 /* Quasar Framework */
 Vue.use(Quasar)
 if (__THEME === 'mat') require('quasar-extras/roboto-font')

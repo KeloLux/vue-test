@@ -4,6 +4,7 @@
         "es": "Español",
         "en": "Ingles"
     },
+    "reload": "Refrescar",
     "data-table": {
         "columns": "Columnas",
         "allCols": "Todas las Columnas",

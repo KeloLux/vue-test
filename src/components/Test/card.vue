@@ -196,73 +196,70 @@
 </template>
 
 <script>
-import {
-  QCard,
-  QCardTitle,
-  QCardMedia,
-  QCardActions,
-  QCardSeparator,
-  QCardMain,
-  QList,
-  QItem,
-  QItemMain,
-  QItemSide,
-  QItemTile,
-  QCollapsible,
-  QRating,
-  QBtn,
-  QParallax,
-  QIcon,
-  QPopover,
-  QVideo
-} from 'quasar'
+    import {
+      QCard,
+      QCardTitle,
+      QCardMedia,
+      QCardActions,
+      QCardSeparator,
+      QCardMain,
+      QList,
+      QItem,
+      QItemMain,
+      QItemSide,
+      QItemTile,
+      QCollapsible,
+      QRating,
+      QBtn,
+      QParallax,
+      QIcon,
+      QPopover,
+      QVideo
+    } from 'quasar'
 
-export default {
-  components: {
-    QCard,
-    QCardTitle,
-    QCardMedia,
-    QCardActions,
-    QCardSeparator,
-    QCardMain,
-    QList,
-    QItem,
-    QItemMain,
-    QItemSide,
-    QItemTile,
-    QCollapsible,
-    QRating,
-    QBtn,
-    QParallax,
-    QIcon,
-    QPopover,
-    QVideo
-  },
-  data () {
-    return {
-      stars: 3,
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    export default {
+      components: {
+        QCard,
+        QCardTitle,
+        QCardMedia,
+        QCardActions,
+        QCardSeparator,
+        QCardMain,
+        QList,
+        QItem,
+        QItemMain,
+        QItemSide,
+        QItemTile,
+        QCollapsible,
+        QRating,
+        QBtn,
+        QParallax,
+        QIcon,
+        QPopover,
+        QVideo
+      },
+      data () {
+        return {
+          stars: 3,
+          lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+        }
+      }
     }
-  }
-}
 </script>
 
 <style lang="stylus">
-@import '~variables';
-
-.card-examples {
-  .q-card {
-    width: 300px;
-  }
-
-  .bigger {
-    width: 450px;
-  }
-
-  @media (max-width: $breakpoint-xs-max) {
-    .q-card {
-      width: 100%;
+    @import '~variables';
+    .card-examples {
+        .q-card {
+            width: 300px;
+        }
+        .bigger {
+            width: 450px;
+        }
+        @media (max-width: $breakpoint-xs-max) {
+            .q-card {
+                width: 100%;
+            }
+        }
     }
-  }
-}
 </style>

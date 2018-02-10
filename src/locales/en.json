@@ -4,6 +4,7 @@
         "es": "Spanish",
         "en": "English"
     },
+    "reload": "Reload",
     "data-table": {
         "selection": "multiple",
         "columns": "Columns",
@@ -21,7 +22,7 @@
         "waitingTag": "Scan a tag…",
         "tagSerial": "Serial number",
         "notAvailable": "Your mobile is not compatible.",
-        "showSettings": "Enable NFC",
+        "showSettings": "The NFC is disabled, please activate it to read the cards",
         "history": "History",
         "noHistory": "Empty"
     }
