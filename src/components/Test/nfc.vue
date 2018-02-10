@@ -1,6 +1,6 @@
 <template>
-  <div class="row items-start">
-    <q-card class="col-sm-12 col-md-3">
+  <div class="layout-padding row  ">
+    <q-card class="col-auto">
       <q-card-title>
         NFC
         <span v-if="compatible" slot="subtitle">{{$t("nfcText.waitingTag")}}</span>
@@ -21,12 +21,18 @@
       </q-card-main>
       <q-card-main v-else>{{$t("nfcText.notAvailable")}}</q-card-main>
     </q-card>
+    <q-card class="col-auto">
+      <q-collapsible label="Log">
+        <pre>{{log}}</pre>
+      </q-collapsible>
+    </q-card>
   </div>
 </template>
 
 <script>
     import { nativeAlert
     } from '../../libs'
+    import moment from 'moment'
     import {
       QCard,
       QCardTitle,
@@ -36,7 +42,8 @@
       QList,
       QListHeader,
       QItem,
-      QBtn
+      QBtn,
+      QCollapsible
     } from 'quasar'
 
     export default {
@@ -50,14 +57,16 @@
         QList,
         QListHeader,
         QItem,
-        QBtn
+        QBtn,
+        QCollapsible
       },
       data () {
         return {
           compatible: true,
           nfc_disabled: false,
           dialog: false,
-          items: JSON.parse(localStorage.getItem('scanHistory') || '[]')
+          items: JSON.parse(localStorage.getItem('scanHistory') || '[]'),
+          log: ''
         }
       },
       watch: {
@@ -68,15 +77,18 @@
       },
       mounted () {
         // When the view is mounted, register the scan tag event.
+        this.addLog('Mounted')
         this.registerTagEvent()
       },
       beforeDestroy () {
         // When the view is destroyed (user leave), unregister the scan tag event, to avoid scanning tag in other view
+        this.addLog('BeforeDestroy')
         this.unregisterTagEvent()
       },
       methods: {
         registerTagEvent () {
           // Unregister previously « resume » event listener.
+          this.addLog('registerTagEvent nfc = ' + typeof nfc)
           document.removeEventListener('resume', this.registerTagEvent, false)
           if (typeof nfc !== 'undefined') {
             // Nfc is available, waiting for scan
@@ -93,12 +105,14 @@
         },
         unregisterTagEvent () {
           // Test if the plugin is defined
+          this.addLog('unregisterTagEvent nfc = ' + typeof nfc)
           if (typeof nfc !== 'undefined') {
             nfc.removeTagDiscoveredListener(this.displayTagId)
           }
         },
         displayTagId (nfcEvent) {
           // Decode tag data from the plugin
+          this.addLog('displayTagId nfcEvent = ' + nfcEvent)
           const tag = nfcEvent.tag
           const tagId = nfc.bytesToHexString(tag.id)
           // Push the new tag to the saved list
@@ -108,6 +122,7 @@
         },
         error (e) {
           // Manage the state
+          this.addLog('error e = ' + e)
           if (e === 'NFC_DISABLED') {
             this.compatible = false
             this.nfc_disabled = true
@@ -118,15 +133,20 @@
           }
         },
         success () {
+          this.addLog('success')
           this.compatible = true
           this.nfc_disabled = false
         },
         showSettings () {
           // Trigger the phone settings to enable the Nfc settings
+          this.addLog('showSettings')
           nfc.showSettings()
           // To refresh the state of the nfc, we add a listener to the « resume » event.
           // The resume event is triggered by cordova when the app is « Resumed ».
           document.addEventListener('resume', this.registerTagEvent, false)
+        },
+        addLog (method) {
+          this.log += method.replace(/\b\w/g, l => l.toUpperCase()) + ' ' + moment().format('HH:mm:ss DD/MM/YYYY') + ' \n'
         }
       }
     }
