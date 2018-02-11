@@ -1,6 +1,6 @@
 <template>
-  <div class="layout-padding row  ">
-    <q-card class="col-auto">
+  <div class="layout-padding row on-left">
+    <q-card class="col-12 col-md-5">
       <q-card-title>
         NFC
         <span v-if="compatible" slot="subtitle">{{$t("nfcText.waitingTag")}}</span>
@@ -16,14 +16,15 @@
         <q-card-separator />
         <q-card-actions class="justify-center">
           <q-btn class="generic-margin" color="deep-orange" v-on:click="showSettings">{{$t("nfcText.showSettings")}}</q-btn>
-          <q-btn class="generic-margin" color="info" v-on:click="unregisterTagEvent();registerTagEvent();">{{$t("reload")}}</q-btn>
+          <q-btn class="generic-margin" color="info" v-on:click="rerender">{{$t("reload")}}</q-btn>
         </q-card-actions>
       </q-card-main>
       <q-card-main v-else>{{$t("nfcText.notAvailable")}}</q-card-main>
+      <q-btn class="generic-margin" color="info" v-on:click="rerender">{{$t("reload")}}</q-btn>
     </q-card>
-    <q-card class="col-auto">
+    <q-card class="col-12 col-md-6">
       <q-collapsible label="Log">
-        <pre>{{log}}</pre>
+        <div v-html="log"></div>
       </q-collapsible>
     </q-card>
   </div>
@@ -157,7 +158,19 @@
           document.addEventListener('resume', this.registerTagEvent, false)
         },
         addLog (method) {
-          this.log += method.replace(/\b\w/g, l => l.toUpperCase()) + ' ' + moment().format('HH:mm:ss DD/MM/YYYY') + ' \n'
+          this.log += method.replace(/\b\w/g, l => l.toUpperCase()) + ' ' + moment().format('HH:mm:ss DD/MM/YYYY') + ' <br/>'
+        },
+        rerender () {
+          this.addLog('re-render unregisterTagEvent')
+          this.unregisterTagEvent()
+          this.$nextTick(() => {
+            this.addLog('re-render registerTagEvent')
+            this.registerTagEvent()
+            this.addLog('re-render start')
+            this.$nextTick(() => {
+              this.addLog('re-render end')
+            })
+          })
         }
       }
     }
