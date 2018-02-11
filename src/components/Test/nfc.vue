@@ -4,27 +4,28 @@
       <q-card-title>
         NFC
         <span v-if="compatible" slot="subtitle">{{$t("nfcText.waitingTag")}}</span>
+        <q-btn class="pull-right generic-margin" color="info" v-on:click="rerender">{{$t("reload")}}</q-btn>
       </q-card-title>
       <q-card-main v-if="compatible">
         <q-list>
           <q-list-header>{{$t("nfcText.history")}}</q-list-header>
-          <q-item v-if="items.length > 0" v-for="item in items" v-bind:key="item" v-text="item"></q-item>
-          <q-item v-else v-text="$t('nfcText.noHistory')" class="text-xs-center"></q-item>
+          <q-scroll-area style=" height: 30vh">
+            <q-item v-if="items.length > 0" v-for="item in items" v-bind:key="item" v-text="item"></q-item>
+            <q-item v-else v-text="$t('nfcText.noHistory')" class="text-xs-center"></q-item>
+          </q-scroll-area>
         </q-list>
       </q-card-main>
       <q-card-main v-else-if="nfc_disabled">
         <q-card-separator />
         <q-card-actions class="justify-center">
           <q-btn class="generic-margin" color="deep-orange" v-on:click="showSettings">{{$t("nfcText.showSettings")}}</q-btn>
-          <q-btn class="generic-margin" color="info" v-on:click="rerender">{{$t("reload")}}</q-btn>
         </q-card-actions>
       </q-card-main>
       <q-card-main v-else>{{$t("nfcText.notAvailable")}}</q-card-main>
-      <q-btn class="generic-margin" color="info" v-on:click="rerender">{{$t("reload")}}</q-btn>
     </q-card>
     <q-card class="col-12 col-md-6">
       <q-collapsible label="Log">
-        <div v-html="log"></div>
+        <q-scroll-area v-html="log" style=" height: 40vh"></q-scroll-area>
       </q-collapsible>
     </q-card>
   </div>
@@ -44,7 +45,8 @@
       QListHeader,
       QItem,
       QBtn,
-      QCollapsible
+      QCollapsible,
+      QScrollArea
     } from 'quasar'
 
     export default {
@@ -59,7 +61,8 @@
         QListHeader,
         QItem,
         QBtn,
-        QCollapsible
+        QCollapsible,
+        QScrollArea
       },
       data () {
         return {
@@ -93,11 +96,11 @@
           document.removeEventListener('resume', this.registerTagEvent, false)
           if (typeof nfc !== 'undefined') {
             // Nfc is available, waiting for scan
-    
+            /*
             nfc.addNdefListener(
               this.onNdef, () => { this.success(); this.addLog('addNdefListener') },
               this.error
-            )
+            ) */
 
             nfc.addTagDiscoveredListener(
               this.displayTagId, this.success, this.error
@@ -120,6 +123,7 @@
         },
         displayTagId (nfcEvent) {
           // Decode tag data from the plugin
+          this.success()
           const tag = nfcEvent.tag
           this.addLog('displayTagId tag = ' + JSON.stringify(nfcEvent.tag))
           const tagId = nfc.bytesToHexString(tag.id)
@@ -130,7 +134,7 @@
         },
         onNdef: function (nfcEvent) {
           this.addLog('onNdef tag = ' + JSON.stringify(nfcEvent.tag))
-          navigator.notification.vibrate(100)
+          // navigator.notification.vibrate(100)
         },
         error (e) {
           // Manage the state
@@ -158,11 +162,12 @@
           document.addEventListener('resume', this.registerTagEvent, false)
         },
         addLog (method) {
-          this.log += method.replace(/\b\w/g, l => l.toUpperCase()) + ' ' + moment().format('HH:mm:ss DD/MM/YYYY') + ' <br/>'
+          this.log = moment().format('HH:mm:ss') + ' - ' + method.replace(/\b\w/g, l => l.toUpperCase()) + ' <br/>' + this.log
         },
         rerender () {
-          this.addLog('re-render unregisterTagEvent')
-          this.unregisterTagEvent()
+          this.addLog('re-render resume')
+          this.registerTagEvent()
+          /* this.unregisterTagEvent()
           this.$nextTick(() => {
             this.addLog('re-render registerTagEvent')
             this.registerTagEvent()
@@ -170,7 +175,7 @@
             this.$nextTick(() => {
               this.addLog('re-render end')
             })
-          })
+          }) */
         }
       }
     }
