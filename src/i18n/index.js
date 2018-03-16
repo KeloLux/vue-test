@@ -1,5 +1,9 @@
+import es from './es'
 import en from './en'
+let gr = en
 
 export default {
-  en
+  es,
+  en,
+  gr
 }

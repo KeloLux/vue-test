@@ -6,6 +6,12 @@ export default [
     children: [
       { path: '', component: () => import('pages/index') }
     ]
+  }, {
+    path: '/home',
+    component: () => import('layouts/default'),
+    children: [
+      { path: '', component: () => import('pages/index') }
+    ]
   },
 
   { // Always leave this as last one

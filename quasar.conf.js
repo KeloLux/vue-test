@@ -1,15 +1,11 @@
 // Configuration for your app
-
+let path = require('path')
 module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: [
-      'i18n',
-      'axios'
-    ],
-    css: [
-      'app.styl'
-    ],
+    // plugins: ['axios', 'i18n'],
+    plugins: ['axios', 'vuex-i18n'],
+    css: ['app.styl'],
     extras: [
       ctx.theme.mat ? 'roboto-font' : null,
       'material-icons'
@@ -25,8 +21,8 @@ module.exports = function (ctx) {
     build: {
       scopeHoisting: true,
       vueRouterMode: 'history',
-      vueRouterBase: '/dds',
-      publicPath: '/dds',
+      // vueRouterBase: '/dds',
+      // publicPath: '/dds',
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
@@ -38,12 +34,16 @@ module.exports = function (ctx) {
           loader: 'eslint-loader',
           exclude: /(node_modules|quasar)/
         })
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          '@statics': path.resolve(__dirname, './src/statics')
+        }
       }
     },
     devServer: {
       // https: true,
       // port: 8080,
-      open: true // opens browser window automatically
+      open: true // opens browser wsindow automatically
     },
     // framework: 'all' --- includes everything; for dev only!
     framework: {
@@ -63,19 +63,16 @@ module.exports = function (ctx) {
         'QItemMain',
         'QItemSide'
       ],
-      directives: [
-        'Ripple'
-      ],
+      directives: ['Ripple', 'CloseOverlay'],
       // Quasar plugins
-      plugins: [
-        'Notify'
-      ]
+      plugins: ['Notify']
+      // i18n: 'es'
     },
     // animations: 'all' --- includes all animations
-    animations: [
-    ],
+    animations: [],
     pwa: {
-      cacheExt: 'js,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
+      cacheExt:
+        'js,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
       manifest: {
         // name: 'Quasar App',
         // short_name: 'Quasar-PWA',
@@ -86,29 +83,29 @@ module.exports = function (ctx) {
         theme_color: '#027be3',
         icons: [
           {
-            'src': 'statics/icons/icon-128x128.png',
-            'sizes': '128x128',
-            'type': 'image/png'
+            src: 'statics/icons/icon-128x128.png',
+            sizes: '128x128',
+            type: 'image/png'
           },
           {
-            'src': 'statics/icons/icon-192x192.png',
-            'sizes': '192x192',
-            'type': 'image/png'
+            src: 'statics/icons/icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
           },
           {
-            'src': 'statics/icons/icon-256x256.png',
-            'sizes': '256x256',
-            'type': 'image/png'
+            src: 'statics/icons/icon-256x256.png',
+            sizes: '256x256',
+            type: 'image/png'
           },
           {
-            'src': 'statics/icons/icon-384x384.png',
-            'sizes': '384x384',
-            'type': 'image/png'
+            src: 'statics/icons/icon-384x384.png',
+            sizes: '384x384',
+            type: 'image/png'
           },
           {
-            'src': 'statics/icons/icon-512x512.png',
-            'sizes': '512x512',
-            'type': 'image/png'
+            src: 'statics/icons/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
           }
         ]
       }
@@ -126,7 +123,6 @@ module.exports = function (ctx) {
         // appCategoryType: '',
         // osxSign: '',
         // protocol: 'myapp://path',
-
         // Window only
         // win32metadata: { ... }
       }
@@ -136,3 +132,19 @@ module.exports = function (ctx) {
     starterKit: '1.0.2'
   }
 }
+/*
+alias: {
+quasar: appPaths.resolve.app(`node_modules/quasar-framework/dist/quasar.${cfg.ctx.themeName}.esm.js`),
+src: appPaths.srcDir,
+components: appPaths.resolve.src(`components`),
+layouts: appPaths.resolve.src(`layouts`),
+pages: appPaths.resolve.src(`pages`),
+assets: appPaths.resolve.src(`assets`),
+variables: appPaths.resolve.app(`.quasar/variables.styl`),
+
+// CLI using these ones:
+'quasar-app-styl': appPaths.resolve.app(`.quasar/app.styl`),
+'quasar-app-variables': appPaths.resolve.src(`css/themes/variables.${cfg.ctx.themeName}.styl`),
+'quasar-styl': appPaths.resolve.app(`node_modules/quasar-framework/dist/quasar.${cfg.ctx.themeName}.styl`)
+}
+*/
