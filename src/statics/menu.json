@@ -27,23 +27,13 @@
     }
   },
   {
-    "title": "Home",
-    "path": "home",
-    "component": "layouts/App/App",
-    "icon": "home",
+    "title": "MyPoop Inventory",
+    "path": "mypoop/inventory",
+    "component": "pages/MyPoop/inventory",
+    "icon": "list",
     "isVisible": true,
     "meta": {
-      "title": "Home Page - Example App",
-      "metaTags": [
-        {
-          "name": "description",
-          "content": "The home page of our example app."
-        },
-        {
-          "property": "og:description",
-          "content": "The home page of our example app."
-        }
-      ]
+      "title": "MyPoop Inventory"
     }
   },
   {

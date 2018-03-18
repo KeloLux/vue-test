@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-layout-header>
       <q-toolbar color="primary" :inverted="$q.theme === 'ios'">
-        <q-btn flat dense round class="lt-md" @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
           <q-icon name="menu" />
         </q-btn>
         <q-toolbar-title>
@@ -26,11 +26,9 @@
           </q-popover>
         </q-btn>
       </q-toolbar>
-
-      <app-nav-header class="gt-sm" />
     </q-layout-header>
 
-    <q-layout-drawer class="lt-md" v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
+    <q-layout-drawer v-model="leftDrawerOpen" :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <app-nav-left/>
     </q-layout-drawer>
 
@@ -48,23 +46,19 @@
 
 <script>
 import { openURL, QPopover, QLayoutFooter } from 'quasar'
-import AppNavHeader from './AppNavHeader.vue'
 import AppNavLeft from './AppNavLeft.vue'
 import AppFooter from './AppFooter.vue'
-import menu from '@statics/menu.json'
 import { commonMixin } from '@mixins/index.js'
 
 export default {
   name: 'LayoutDefault',
   mixins: [commonMixin],
   components: {
-    AppNavHeader, AppNavLeft, AppFooter, QPopover, QLayoutFooter
+    AppNavLeft, AppFooter, QPopover, QLayoutFooter
   },
   data () {
     return {
-      // leftDrawerOpen: this.$q.platform.is.desktop,
-      leftDrawerOpen: false,
-      menu: menu
+      leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
   methods: {
@@ -76,6 +70,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang='stylus'>
+#testcolor {
+  color: white !important;
+}
 </style>
