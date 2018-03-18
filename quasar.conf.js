@@ -36,7 +36,8 @@ module.exports = function (ctx) {
         })
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
-          '@statics': path.resolve(__dirname, './src/statics')
+          '@statics': path.resolve(__dirname, './src/statics'),
+          '@mixins': path.resolve(__dirname, './src/mixins')
         }
       }
     },

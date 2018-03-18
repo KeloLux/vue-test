@@ -11,5 +11,5 @@ export default ({ app, Vue, store }) => {
     Vue.i18n.add(locale, i18n[locale])
   }
   // Set the start locale to use
-  Vue.i18n.set('es')
+  // Vue.i18n.set('es')
 }

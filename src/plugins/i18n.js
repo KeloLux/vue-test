@@ -6,8 +6,6 @@ export default ({ app, Vue, store }) => {
   // añadimos los idiomas en store
   // recorremos los idioma añadidos en strore
   for (var locale in i18n) {
-    console.log(locale)
-    console.log(i18n[locale])
     store.commit('addLocale', locale)
   }
 
@@ -17,4 +15,5 @@ export default ({ app, Vue, store }) => {
     fallbackLocale: 'es',
     i18n
   })
+  // Vue.config.lang = 'es'
 }

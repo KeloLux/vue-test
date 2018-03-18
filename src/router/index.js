@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import menu from '@statics/menu.json'
+import { commonMixin } from 'src/mixins/index.js'
 // import routes from './routes'
 
 Vue.use(VueRouter)
@@ -24,12 +25,13 @@ function load (componentRoute) {
 var routes = [
   {
     path: '/:lang',
+    component: load('layouts/App/App'),
     // create a container component
-    component: {
+    /* component: {
       render (c) {
         return c('router-view')
       }
-    },
+    }, */
     children: []
   },
   {
@@ -49,6 +51,7 @@ for (var route of menu) {
         if (children.hasOwnProperty('component')) {
           children.component = load(children.component)
         }
+        if (!children.path) children.path = route.path
       }
     }
     routes[0].children.push(route)
@@ -56,6 +59,7 @@ for (var route of menu) {
 }
 
 routes[0].children.push({ path: '*', component: load('pages/404') })
+
 const Router = new VueRouter({
   /*
    * NOTE! Change Vue Router mode from quasar.conf.js -> build -> vueRouterMode
@@ -74,23 +78,7 @@ const Router = new VueRouter({
 })
 
 Router.afterEach((to, from) => {
-  /* console.log('from', from)
-  console.log('to', to)
-  let lang = Vue.i18n.localeExists(to.params.lang)
-    ? to.params.lang
-    : Vue.i18n.localeExists(from.params.lang) ? from.params.lang : 'es'
-  Router.replace({ params: { lang: lang } })
-  /*
-  Router.push(
-    '/' +
-      lang +
-      '/' +
-      to.path
-        .split(/\/(.+)/)
-        .filter(String)
-        .pop()
-  ) */
-  // Vue.i18n.set(lang)
+  commonMixin.methods.changeI18n(Router, Vue.i18n, to.params.lang)
 })
 
 // This callback runs before every route change, including on page load.

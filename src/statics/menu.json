@@ -3,7 +3,7 @@
     "title": "Index",
     "subtitle": "SubIndex",
     "path": "index",
-    "component": "layouts/App/App",
+    "component": "pages/index",
     "icon": "home",
     "isVisible": true,
     "children": [
